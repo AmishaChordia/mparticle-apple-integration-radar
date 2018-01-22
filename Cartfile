@@ -1,2 +1,1 @@
-github "radarlabs/radar-sdk-ios" ~> 1.2.0
 github "walmartlabs-wmusiphone/mparticle-apple-sdk" "qadeployment"
