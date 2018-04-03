@@ -23,8 +23,10 @@
 #import "RadarSDK.h"
 #endif
 
-NSString *const KEY_PUBLISHABLE_KEY = @"publishableKey";
-NSString *const KEY_RUN_AUTOMATICALLY = @"runAutomatically";
+static NSString * const KEY_PUBLISHABLE_KEY = @"publishableKey";
+static NSString * const KEY_RUN_AUTOMATICALLY = @"runAutomatically";
+static NSString * const kMPUserIdentityTypeKey = @"n";
+static NSString * const kMPUserIdentityIdKey = @"i";
 
 NSUInteger MPKitInstanceCompanyName = 117;
 
@@ -77,6 +79,16 @@ NSUInteger MPKitInstanceCompanyName = 117;
     }
 
     [Radar initializeWithPublishableKey:publishableKey];
+
+    for (NSDictionary<NSString *, id> *userIdentity in self.userIdentities) {
+        MPUserIdentity identityType = (MPUserIdentity)[userIdentity[kMPUserIdentityTypeKey] integerValue];
+        NSString *identityString = userIdentity[kMPUserIdentityIdKey];
+
+        if (identityType == MPUserIdentityCustomerId) {
+            [Radar setUserId:identityString];
+            break;
+        }
+    }
 
     _configuration = configuration;
 
